@@ -3,12 +3,12 @@ import AspectRatioIcon from '@mui/icons-material/AspectRatio';
 import CloseIcon from '@mui/icons-material/Close';
 import {useEffect, useState} from "react";
 const NoteApp =()=>{
-    const[notes,setNotes] =useState<string[]>([])
-    let num =0
-    const[input,setInput] =useState("")
+    const[notes,setNotes]=useState<string[]>([])
+    const [input,setInput]=useState<string>("")
     useEffect(()=>{
 
-    },[num])
+    },[notes])
+
     return(
         <div className={"absolute w-96 rounded-2xl flex flex-col top-15 right-1.5 h-96 bg-blue-200"}
              draggable={true}
@@ -24,15 +24,16 @@ const NoteApp =()=>{
                 </div>
             </div>
             <div className={"overflow-scroll mb-5 p-2 scroll-smooth"}>
-                {notes.map((note)=>(
-                    <div className={"bg-white h-15 rounded-xl mb-2 pl-2 items-center flex"} onClick={(e)=>console.log(e.detail)}>{note}</div>
+                {notes?.map((note)=>(
+                    <div className={"bg-white h-15 rounded-xl mb-2 pl-2 items-center flex"} onClick={(e)=>console.log(e) }>{note}</div>
                 ))}
             </div>
             <div className={"absolute bottom-0 p-3 w-full bg-white"}>
                 <form onSubmit={(e)=>{
                     e.preventDefault()
                     notes.push(input)
-                    num+=1
+                    setNotes(notes)
+
                 }}
                       className={"flex justify-between w-full"}
                 >
