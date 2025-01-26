@@ -1,20 +1,28 @@
-import {useState} from "react";
+import {useRef, useState} from "react";
 import RemoveIcon from '@mui/icons-material/Remove';
 import AspectRatioIcon from '@mui/icons-material/AspectRatio';
 import CloseIcon from '@mui/icons-material/Close';
+import * as React from "react";
 
 const PomodoroTimer =()=>{
-    const[xPosition,setXPosition] =useState<number>(50)
-    const[yPosition,setYPosition] =useState<number>(800)
     const[start,setStart] =useState(false)
     const[mins,setMins] =useState(25)
     const[secs,setSecs] =useState(0)
+    const [widgets,setWidgets]=useState<string[]>([])
 
-
-    const pomodoroStyles ={
-        top:xPosition,
-        left:yPosition
+    function handleDrag(e: React.DragEvent,widgetType:string){
+        e.dataTransfer.setData("widgetType",widgetType)
     }
+    function handleOnDrop(e: React.DragEvent){
+        const widgetType =e.dataTransfer.getData("widgetType") as string
+        setWidgets([...widgets,widgetType])
+    }
+    function handleDragOver(e: React.DragEvent){
+        e.preventDefault()
+    }
+
+
+
     const startPomodoro =()=>{
         if(!start){
             setStart(true)
@@ -54,8 +62,8 @@ const PomodoroTimer =()=>{
 
     return(
         <div className={`fixed z-[999] w-96 flex flex-col h-[200px] bg-amber-50 rounded-2xl p-2`}
-             style={pomodoroStyles}
              draggable={true}
+             onDragStart={(e)=>handleDrag(e,"pomodoro ")}
         >
             <div className={"flex justify-between "}>
                 <h1>Timer</h1>
