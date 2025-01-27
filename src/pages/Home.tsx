@@ -3,6 +3,7 @@ import PomodoroTimer from "../components/PomodoroTimer.tsx";
 import {useState} from "react";
 import NoteApp from "../components/NoteApp.tsx";
 import DraggableComponent from "../components/Drag.tsx";
+import TextEditor from "../components/TextEditor.tsx";
 
 const Home =()=>{
     const[col,setCol] =useState("blue")
@@ -18,10 +19,11 @@ const Home =()=>{
                 <input type={"color"} onChange={(e)=>setCol(e.target.value)}/>
 
             </div>
-            <PomodoroTimer/>
-            <MusicCard />
-            <NoteApp/>
-            <DraggableComponent/>
+            {/*<PomodoroTimer/>*/}
+            {/*<MusicCard />*/}
+            {/*<NoteApp/>*/}
+            {/*<DraggableComponent/>*/}
+            <TextEditor/>
 
 
         </div>
