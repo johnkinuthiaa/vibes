@@ -10,7 +10,7 @@ const NoteApp =()=>{
     },[notes])
 
     return(
-        <div className={"absolute w-96 rounded-2xl flex flex-col top-15 right-1.5 h-96 bg-blue-200"}
+        <div className={"absolute w-96 rounded-2xl flex flex-col top-15 border right-1.5 h-96 bg-blue-200"}
              draggable={true}
         >
             <div className={"shadow-2xl flex justify-between w-full p-2 items-center bg-[whitesmoke]"}>

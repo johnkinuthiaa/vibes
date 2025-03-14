@@ -1,32 +1,34 @@
 import RemoveIcon from '@mui/icons-material/Remove';
 import AspectRatioIcon from '@mui/icons-material/AspectRatio';
 import CloseIcon from '@mui/icons-material/Close';
-import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-import PauseIcon from '@mui/icons-material/Pause';
-import SkipNextIcon from '@mui/icons-material/SkipNext';
-import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
 import {useEffect, useState} from "react";
-import Data from "../data/Data.tsx";
+
 import * as React from "react";
-const MusicCard =()=>{
-    const [width,setWidth] =useState("420px")
-    const [play,setPlay] =useState(false)
-    const [isPlaying,setIsPlaying] =useState(false)
+type MusicCardProps ={
+    show:boolean
+}
+const MusicCard =({show}:MusicCardProps)=>{
+    const [width,setWidth] =useState<number>(22)
     const[x,setX] =useState<number>(70)
     const[y,setY] =useState<number>(100)
-    const[audio,setAudio] =useState<string>("src/assets/free_for_profit_90s_boom_bap_chill_jazz_x_lofi_type_beat_youth_mp3_70136.mp3")
-    const music =new Audio(audio)
+    const[height,setHeight]=useState<number>(650)
+    const[display,setDisplay]=useState("")
 
-    useEffect(() => {
-
-    }, [audio]);
-
+    useEffect(()=>{
+       if(show){
+           setDisplay("")
+       } else{
+           setDisplay("none")
+       }
+    }, [show])
     const player ={
-        position: 'absolute', // Make sure the position is absolute
+        position: 'absolute',
         top: y + "px",
         left: x + "px",
-        width:width,
+        width:width+"%",
         cursor: 'pointer',
+        display:display
+
     }
     const currentPosition = { x: 0, y: 0 };
 
@@ -44,27 +46,11 @@ const MusicCard =()=>{
         setX(prevX => prevX + (newX - currentPosition.x));
         setY(prevY => prevY + (newY - currentPosition.y));
     };
-    const playMusic =()=>{
-        if(!isPlaying){
-            setPlay(true)
-            setIsPlaying(true)
-            music.play()
-        }else{
-            setIsPlaying(false)
-            setPlay(false)
-            music.pause()
 
-        }
-
-    }
-    // const pauseMusic =()=>{
-    //
-    //
-    // }
 
     return(
         <div
-            className={` h-[650px] bg-[whitesmoke] rounded-2xl flex flex-col gap-4 fixed z-[999] `}
+            className={` h-[${height}px]  rounded-2xl flex flex-col gap-4 fixed z-[999] `}
             style={player}
             draggable={true}
             onDragStart={handleDragStart}
@@ -76,38 +62,26 @@ const MusicCard =()=>{
                     <h3 className={"text-2xl font-bold text-blue-400"}>Music player</h3>
                 </div>
                 <div className={""}>
-                    <button><RemoveIcon/></button>
-                    <button><AspectRatioIcon/></button>
+                    <button onClick={()=>setDisplay("none")}><RemoveIcon/></button>
+                    <button onClick={()=>{
+                        setWidth(100)
+                        setHeight(1000)
+                        setY(0)
+                        setX(0)
+                    }}><AspectRatioIcon/></button>
                     <button><CloseIcon/></button>
                 </div>
+            </div>
+            <div className={"-mt-3"}>
+                <iframe className={"rounded mb-2"}
+                        src="https://open.spotify.com/embed/playlist/6ddftH2hsPzCKdDX83MTwf?utm_source=generator&theme=0"
+                        width={"100%"} height={height-10} frameBorder="0" allowFullScreen={true}
+                        allow={"autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"}
+                        loading={"lazy"}>
 
-                {/*<button onClick={()=>setPlay(true)}>Play</button>*/}
+                </iframe>
             </div>
-            <div className={"p-2 flex flex-col overflow-scroll scroll-smooth mb-20"}>
-                {Data.map(({name,artist,filePath})=>(
-                    <div className={"bg-white rounded-2xl mb-2 w-full flex p-2 cursor-pointer h-"} onClick={()=>setAudio(filePath)}>
-                        <img src={"src/assets/react.svg"}/>
-                        <div className={"flex flex-col"}>
-                            <h1>{name}</h1>
-                            <h1>{artist}</h1>
-                        </div>
-                    </div>
-                ))}
-            </div>
-            <div className={"absolute bottom-0 w-full flex flex-col h-20 items-center justify-center rounded-2xl cursor-default bg-[whitesmoke]"}>
-                <div>
-                    <p>0.00</p>
-                    <div>{music.duration.toString()}</div>
-                </div>
-                <div className={"flex justify-center items-center gap-3 "}>
-                    <button className={"cursor-pointer"}><SkipPreviousIcon/></button>
-                    <button className={"cursor-pointer"} onClick={()=>
-                        playMusic()
-                    }>{isPlaying?<PauseIcon/>:<PlayArrowIcon/>}</button>
-                    <button className={"cursor-pointer"}><SkipNextIcon/></button>
-                </div>
 
-            </div>
         </div>
     )
 }
