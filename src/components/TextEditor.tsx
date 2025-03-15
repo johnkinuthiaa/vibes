@@ -1,17 +1,36 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
+type TextEditorStyles ={
+    show:boolean
+}
 
-const TextEditor =()=>{
+const TextEditor =({show}:TextEditorStyles)=>{
     const [bold,setBold] =useState<boolean>(false)
     const [italics,setItalics] =useState<boolean>(false)
     const [cancel,setCancelled] =useState<boolean>(false)
     const [underline,setUnderline] =useState<boolean>(false)
     const [capitalize,setCapitalize] =useState<boolean>(false)
     const [fontColor,setFontColor] =useState<string>("rgb(0,0,0)")
+
+    const[display,setDisplay]=useState("")
+    useEffect(() => {
+        if(!show){
+            setDisplay("none")
+        }else{
+            setDisplay("")
+        }
+    }, [show]);
+    const TextEditorStyles ={
+        display:display
+    }
     const textAreaStyles ={
         color:fontColor
     }
     return(
-        <div className={"text__editor__container flex flex-col w-[600px] bg-gray-700 mt-12 absolute  ml-4 rounded-2xl  "}>
+        <div
+            className={"text__editor__container flex flex-col w-[600px] bg-gray-700 mt-12 absolute  ml-4 rounded-2xl  "}
+            style={TextEditorStyles}
+
+        >
             <div className={"Header flex gap-5 p-2 items-center justify-center mb-10"}>
                 <button onClick={()=>setBold(!bold)}>B</button>
                 <button onClick={()=>setItalics(!italics)}>I</button>
