@@ -31,7 +31,8 @@ const Home =()=>{
             {/*<DraggableComponent/>*/}
             <TextEditor show={showTextEditor}/>
             <Terminal show={showTerminal}/>
-            <div className={"dock rounded-full bg-[rgb(0,0,0,0.7)] absolute bottom-0 p-2 gap-4 [&>*]:gap-2 [&>div>p]:font-bold [&>*]:p-1 w-full m-[0 auto] flex " +
+            <div className={"dock rounded-full bg-[rgb(0,0,0,0.7)] absolute bottom-0 p-2 gap-4 [&>*]:gap-2" +
+                " [&>div>p]:font-bold [&>*]:p-1 w-full m-[0 auto] flex " +
                     "justify-center items-center [&>*]:hover:-translate-y-2 [&>*]:transition-all"}
             >
                 <div className={"flex flex-col items-center"} onClick={()=>{
